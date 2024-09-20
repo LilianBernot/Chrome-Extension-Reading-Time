@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Wikipedia reading time",
+  "version": "1.0",
+  "description": "Add the reading time to Wikipedia pages",
+  "icons": {
+    "16": "images/icons8-horloge-64.png"
+  },
+  "action": {
+    "default_popup": "index.html"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "scripts/content.js"
+      ],
+      "matches": [
+        "https://en.wikipedia.org/wiki/*"
+      ]
+    }
+  ]
+}
