@@ -12,7 +12,7 @@
   "content_scripts": [
     {
       "js": [
-        "scripts/content.js"
+        "scripts/content.ts"
       ],
       "matches": [
         "https://en.wikipedia.org/wiki/*"
