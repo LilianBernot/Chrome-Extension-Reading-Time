@@ -16,56 +16,74 @@ function createDataBadge(document, readingTime) {
   badge.textContent = `⏱️ ${readingTime} min read`;
 
   // Style for badge
-  badge.style.backgroundColor = "#f0f0f0";  // Light gray background
-  badge.style.padding = "5px 10px";         // Padding around the text
-  badge.style.borderRadius = "10px";        // Rounded corners
-  badge.style.fontWeight = "bold";          // Bold text
   badge.style.color = "#333";               // Darker text color for better contrast
-  badge.style.display = "inline-block";     // Make it an inline-block for better spacing
-  badge.style.margin = "5px 0";             // Some margin to space it from other content
+  badge.style.padding = "5px 10px";         // Padding around the text
+
+  addChipStyle(badge);
+
+  addElementHoverEffect(badge);
 
   return badge
-
 }
+
+/**
+* Add style to the elements we create.
+*/
+function addChipStyle(element) {
+  element.style.backgroundColor = "#4CAF50";  // Light gray background
+  element.style.borderRadius = "10px";        // Rounded corners
+  element.style.fontWeight = "bold";          // Bold text
+  element.style.margin = "5px 0";             // Some margin to space it from other content
+  element.style.display = "inline-block";     // Make it an inline-block for better spacing
+  element.style.border = "none";              // Remove the default button border
+}
+
+/**
+* Add little hover effect on elements we create.
+*/
+function addElementHoverEffect(element) {
+  // Add a hover effect
+  element.addEventListener("mouseenter", () => {
+    element.style.backgroundColor = "#45a049"; // Slightly darker green on hover
+  });
+  element.addEventListener("mouseleave", () => {
+    element.style.backgroundColor = "#4CAF50"; // Revert to original green color
+  });
+}
+
 
 function createToggleButton(document, referencesTitle, referencesElements) {
   const referencesToggleButton = document.createElement("button");
   referencesTitle.insertAdjacentElement("afterend", referencesToggleButton);
 
-  // Style the button to match the badge design, but with additional button styling
-  referencesToggleButton.style.backgroundColor = "#4CAF50";    // A pleasant green background
-  referencesToggleButton.style.padding = "8px 15px";           // Padding to make the button larger
-  referencesToggleButton.style.borderRadius = "20px";          // Rounded corners for a "chip" look
-  referencesToggleButton.style.fontWeight = "bold";            // Bold text for emphasis
   referencesToggleButton.style.color = "#fff";                 // White text for contrast
-  referencesToggleButton.style.border = "none";                // Remove the default button border
   referencesToggleButton.style.cursor = "pointer";             // Make the cursor a pointer to show it's clickable
-  referencesToggleButton.style.display = "inline-block";       // Make it behave like a block element inline
-  referencesToggleButton.style.margin = "5px 0";               // Add margin for spacing
   referencesToggleButton.style.boxShadow = "0px 2px 5px rgba(0, 0, 0, 0.2)"; // Subtle shadow for depth
+  referencesToggleButton.style.float = "right"; // We want the button to the right
+  referencesToggleButton.style.minWidth = "160px"; // So it does not change sidzes when toggling
+  referencesToggleButton.style.padding = "8px 15px";           // Padding to make the button larger
 
-  // Add a hover effect
-  referencesToggleButton.addEventListener("mouseenter", () => {
-    referencesToggleButton.style.backgroundColor = "#45a049"; // Slightly darker green on hover
-  });
-  referencesToggleButton.addEventListener("mouseleave", () => {
-    referencesToggleButton.style.backgroundColor = "#4CAF50"; // Revert to original green color
-  });
+  addChipStyle(referencesToggleButton);
+
+  addElementHoverEffect(referencesToggleButton);
 
   addToggleButtonEventListener(referencesToggleButton, referencesElements)
 }
 
+/**
+* Action to toggle the references.
+*/
 function addToggleButtonEventListener(referencesToggleButton, referencesElements) {
   changeElementsDisplay(referencesElements, "none");
-  referencesToggleButton.textContent = "Show references";
+  referencesToggleButton.textContent = "Show references ▼";
 
   referencesToggleButton.addEventListener("click", () => {
     if (referencesElements[0].style.display === "none") {
       changeElementsDisplay(referencesElements, "block");
-      referencesToggleButton.textContent = "Hide References"
+      referencesToggleButton.textContent = "Hide References ▲"
     } else {
       changeElementsDisplay(referencesElements, "none");
-      referencesToggleButton.textContent = "Show references"
+      referencesToggleButton.textContent = "Show references ▼"
     }
   })
 }
