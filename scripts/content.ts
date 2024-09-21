@@ -31,13 +31,16 @@ function createDataBadge(document, readingTime) {
 const article = document.getElementById("mw-content-text");
 
 if (article) {
+
+  // ----------------------------  Toggle button for citations  ----------------------------
+
   const reflist = article.querySelector('.reflist');
   if (reflist) {
-    // ------------------- creating a toggle button for citations
+    const referencesTitle = document.getElementById("References");
 
-    const citations = document.getElementById("Citations");
+    // const citations = document.getElementById("Citations");
     const citationsToggleButton = document.createElement("button");
-    citations.insertAdjacentElement("afterend", citationsToggleButton);
+    referencesTitle.insertAdjacentElement("afterend", citationsToggleButton);
 
     reflist.style.display = 'none';
     citationsToggleButton.textContent = "Show references";
@@ -52,6 +55,9 @@ if (article) {
       }
     })
   }
+
+  // ----------------------------  Count words  ----------------------------
+
 
   // Clone the article's content to avoid modifying the original
   const articleClone = article.cloneNode(true);
