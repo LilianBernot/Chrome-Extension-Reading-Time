@@ -34,24 +34,43 @@ if (article) {
 
   // ----------------------------  Toggle button for citations  ----------------------------
 
+  const referencesTitle = document.getElementById("References");
   const reflist = article.querySelector('.reflist');
-  if (reflist) {
-    const referencesTitle = document.getElementById("References");
 
-    // const citations = document.getElementById("Citations");
-    const citationsToggleButton = document.createElement("button");
-    referencesTitle.insertAdjacentElement("afterend", citationsToggleButton);
+  if (referencesTitle && reflist) {
 
-    reflist.style.display = 'none';
-    citationsToggleButton.textContent = "Show references";
+    const referencesElements = [reflist];
 
-    citationsToggleButton.addEventListener("click", () => {
-      if (reflist.style.display === "none") {
-        reflist.style.display = "block";
-        citationsToggleButton.textContent = "Hide References"
+    const citationsTitle = document.getElementById("Citations");
+    if (citationsTitle) {
+      // We are in the case that references is separated in Citations and Cited_sources
+      const citedSourcesTitle = document.getElementById("Cited_sources");
+      // the title is in a div -> we have to get the parent before taking next elements
+      const citedSources = citedSourcesTitle?.parentElement?.nextElementSibling;
+
+      referencesElements.push(citationsTitle, citedSourcesTitle, citedSources)
+    }
+
+    const referencesToggleButton = document.createElement("button");
+    referencesTitle.insertAdjacentElement("afterend", referencesToggleButton);
+
+    referencesElements.forEach((item, index) => {
+      item.style.display = "none";
+    })
+    referencesToggleButton.textContent = "Show references";
+
+    referencesToggleButton.addEventListener("click", () => {
+      if (referencesElements[0].style.display === "none") {
+        referencesElements.forEach((item, index) => {
+          item.style.display = "block";
+        })
+        referencesToggleButton.textContent = "Hide References"
       } else {
-        reflist.style.display = "none";
-        citationsToggleButton.textContent = "Show references"
+
+        referencesElements.forEach((item, index) => {
+          item.style.display = "none";
+        })
+        referencesToggleButton.textContent = "Show references"
       }
     })
   }
