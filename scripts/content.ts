@@ -103,9 +103,16 @@ const article = document.getElementById("mw-content-text");
 if (article) {
 
   // ----------------------------  Toggle button for citations  ----------------------------
+  // References title Idchanges whether page is in different languages
+  const referenceTitles = ["References", "Referencias", "Literatur", "Notes_et_références"];
+  let referencesTitle = null;
 
-  const referencesTitle = document.getElementById("References");
-  const reflist = article.querySelector('.reflist');
+  for (let title of referenceTitles) {
+    referencesTitle = document.getElementById(title);
+    if (referencesTitle) break;
+  }
+
+  const reflist = article.querySelector('.references');
 
   if (referencesTitle && reflist) {
 
@@ -131,7 +138,7 @@ if (article) {
   const articleClone = article.cloneNode(true);
 
   // Remove the references from the cloned article
-  const references = articleClone.querySelector('.reflist');
+  const references = articleClone.querySelector('.references');
   if (references) {
     references.remove();
   }
