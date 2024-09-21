@@ -28,6 +28,58 @@ function createDataBadge(document, readingTime) {
 
 }
 
+function createToggleButton(document, referencesTitle, referencesElements) {
+  const referencesToggleButton = document.createElement("button");
+  referencesTitle.insertAdjacentElement("afterend", referencesToggleButton);
+
+  // Style the button to match the badge design, but with additional button styling
+  referencesToggleButton.style.backgroundColor = "#4CAF50";    // A pleasant green background
+  referencesToggleButton.style.padding = "8px 15px";           // Padding to make the button larger
+  referencesToggleButton.style.borderRadius = "20px";          // Rounded corners for a "chip" look
+  referencesToggleButton.style.fontWeight = "bold";            // Bold text for emphasis
+  referencesToggleButton.style.color = "#fff";                 // White text for contrast
+  referencesToggleButton.style.border = "none";                // Remove the default button border
+  referencesToggleButton.style.cursor = "pointer";             // Make the cursor a pointer to show it's clickable
+  referencesToggleButton.style.display = "inline-block";       // Make it behave like a block element inline
+  referencesToggleButton.style.margin = "5px 0";               // Add margin for spacing
+  referencesToggleButton.style.boxShadow = "0px 2px 5px rgba(0, 0, 0, 0.2)"; // Subtle shadow for depth
+
+  // Add a hover effect
+  referencesToggleButton.addEventListener("mouseenter", () => {
+    referencesToggleButton.style.backgroundColor = "#45a049"; // Slightly darker green on hover
+  });
+  referencesToggleButton.addEventListener("mouseleave", () => {
+    referencesToggleButton.style.backgroundColor = "#4CAF50"; // Revert to original green color
+  });
+
+  addToggleButtonEventListener(referencesToggleButton, referencesElements)
+}
+
+function addToggleButtonEventListener(referencesToggleButton, referencesElements) {
+  changeElementsDisplay(referencesElements, "none");
+  referencesToggleButton.textContent = "Show references";
+
+  referencesToggleButton.addEventListener("click", () => {
+    if (referencesElements[0].style.display === "none") {
+      changeElementsDisplay(referencesElements, "block");
+      referencesToggleButton.textContent = "Hide References"
+    } else {
+      changeElementsDisplay(referencesElements, "none");
+      referencesToggleButton.textContent = "Show references"
+    }
+  })
+}
+
+/**
+* Changes the display style of a list of elements.
+*/
+function changeElementsDisplay(elements, display) {
+  elements.forEach((item) => {
+    item.style.display = display;
+  })
+}
+
+
 const article = document.getElementById("mw-content-text");
 
 if (article) {
@@ -51,28 +103,7 @@ if (article) {
       referencesElements.push(citationsTitle, citedSourcesTitle, citedSources)
     }
 
-    const referencesToggleButton = document.createElement("button");
-    referencesTitle.insertAdjacentElement("afterend", referencesToggleButton);
-
-    referencesElements.forEach((item, index) => {
-      item.style.display = "none";
-    })
-    referencesToggleButton.textContent = "Show references";
-
-    referencesToggleButton.addEventListener("click", () => {
-      if (referencesElements[0].style.display === "none") {
-        referencesElements.forEach((item, index) => {
-          item.style.display = "block";
-        })
-        referencesToggleButton.textContent = "Hide References"
-      } else {
-
-        referencesElements.forEach((item, index) => {
-          item.style.display = "none";
-        })
-        referencesToggleButton.textContent = "Show references"
-      }
-    })
+    createToggleButton(document, referencesTitle, referencesElements);
   }
 
   // ----------------------------  Count words  ----------------------------
